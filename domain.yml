@@ -1,0 +1,51 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - affirm
+  - deny
+  - mood_great
+  - mood_unhappy
+  - bot_challenge
+  - AgencyId
+  - Password
+  - request_details
+
+slots:
+  AgencyID:
+  type: text
+  auto-fill: false
+  
+  Password:
+  type: text
+  auto-fill: false
+
+responses:
+  utter_greet:
+  - text: "Hey! How are you?"
+
+  utter_did_that_help:
+  - text: "Did that help you?"
+
+  utter_happy:
+  - text: "Great, carry on!"
+
+  utter_goodbye:
+  - text: "Bye"
+
+  utter_iamabot:
+  - text: "I am a bot, powered by Rasa."
+  
+  utter_AgencyID:
+  - text: "Please provide your AgencyID."
+  
+  utter_Password:
+  - text: "Please enter Password."
+
+actions:
+- action_login
+  
+session_config:
+  session_expiration_time: 15
+  carry_over_slots_to_new_session: true

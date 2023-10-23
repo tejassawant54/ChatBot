@@ -1,0 +1,21 @@
+version: "3.1"
+
+stories:
+
+- story: happy path
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - intent: mood_great
+  - action: utter_happy
+  
+- story: user authentication
+  steps:
+  - intent: request_details
+  - action: utter_AgencyID
+  - intent: AgencyId
+  - action: utter_Password
+  - intent: Password
+  - action: action_login
+
+  
