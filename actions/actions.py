@@ -13,6 +13,21 @@ from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
 import psycopg2
+import sqlite3
+from sqlalchemy import select, create_engine, Table, Column, Integer, String, MetaData
+import sqlalchemy as db
+
+# conn = sqlite3.connect('/mnt/nvme1n1p2/vamsik1211/Data/FreeLancing-Projects/KaranProjects/ChatBot/debug_data/database_sqlite/sqlite.db')
+
+# engine = create_engine('sqlite:////mnt/nvme1n1p2/vamsik1211/Data/FreeLancing-Projects/KaranProjects/ChatBot/debug_data/database_sqlite/sqlite.db', echo=True)
+# conn = engine.connect()
+
+engine = db.create_engine('sqlite:////mnt/nvme1n1p2/vamsik1211/Data/FreeLancing-Projects/KaranProjects/ChatBot/debug_data/database_sqlite/uid.db')
+conn = engine.connect()
+
+metadata = db.MetaData()
+
+
 
 class ValidateLoginForm(FormValidationAction):
     
@@ -20,13 +35,56 @@ class ValidateLoginForm(FormValidationAction):
         return "validate_login_form"
     
     def validate_AgencyID(self, value, dispatcher, tracker, domain):
-        if value == "5689975":
+
+        table = db.Table('uid', metadata, autoload=True, autoload_with=engine)
+        stmt = db.select([table.columns.agency_id]).where(table.columns.agency_id == value)
+
+        results = conn.execute(stmt).fetchall()
+
+        if results:
             print("Valid Agency ID")
             return {"AgencyID": value}
         else:
             print("Invalid Agency ID")
             dispatcher.utter_message("Invalid Agency ID. Please try again.")
             return {"AgencyID": None}
+
+        # if value == "5689975":
+        #     print("Valid Agency ID")
+        #     return {"AgencyID": value}
+        # else:
+        #     print("Invalid Agency ID")
+        #     dispatcher.utter_message("Invalid Agency ID. Please try again.")
+        #     return {"AgencyID": None}
+
+    def validate_Password(self, value, dispatcher, tracker, domain):
+
+        value = str(value)
+        agency_id = tracker.get_slot("AgencyID")
+
+        table = db.Table('uid', metadata, autoload=True, autoload_with=engine)
+        stmt = db.select([table.columns.agency_id]).where(table.columns.agency_id == agency_id, table.columns.password == value)
+
+        results = conn.execute(stmt).fetchall()
+
+        if results:
+            print("Valid Password")
+            dispatcher.utter_message("Login Successful")
+            return {"Password": value}
+        else:
+            print("Invalid Password")
+            dispatcher.utter_message("Invalid Password. Please try again.")
+            return {"Password": None}
+
+        # if value == "123456":
+        #     print("Valid Password")
+        #     return {"Password": value}
+        # else:
+        #     print("Invalid Password")
+        #     dispatcher.utter_message("Invalid Password. Please try again.")
+        #     return {"Password": None}
+
+
 
 
 # class ActionLogin(Action):
