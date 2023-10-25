@@ -17,15 +17,20 @@ action_endpoint:
 # By default the conversations are stored in memory.
 # https://rasa.com/docs/rasa/tracker-stores
 
+# tracker_store:
+  # type: SQL
+  # dialect: "postgresql"  # the dialect used to interact with the db
+  # url: "localhost"  # (optiona)
+  # port: 5432
+  # db: "onyxdatabase"  # path to your db
+  # username: "postgres" # username used for authentication
+  # password: "root"
+  # driver: my-driver
+
 tracker_store:
   type: SQL
-  dialect: "postgresql"  # the dialect used to interact with the db
-  url: "localhost"  # (optiona)
-  port: 5432
-  db: "onyxdatabase"  # path to your db
-  username: "postgres" # username used for authentication
-  password: "root"
-  driver: my-driver
+  dialect: "sqlite"  # the dialect used to interact with the db
+  url: sqlite:///debug_data/database_sqlite/sqlite.db
 
 #tracker_store:
 #    type: redis

@@ -8,14 +8,33 @@ stories:
   - action: utter_greet
   - intent: mood_great
   - action: utter_happy
-  
-- story: user authentication
-  steps:
+  - user: |
+      Hi
+    intent: greet
+  - action: utter_greet
+  - user: |
+      I'm looking for my transaction details
+      I'm looking for my stay details
   - intent: request_details
-  - action: utter_AgencyID
-  - intent: AgencyId
-  - action: utter_Password
-  - intent: Password
-  - action: action_login
+  - action: login_form
+  - active_loop: null
 
-  
+# - story: user authentication
+#   steps:
+#   - intent: request_details
+#   - action: utter_AgencyID
+#   - intent: AgencyId
+#   - action: utter_Password
+#   - intent: Password
+#   - action: action_login
+
+- story: continue
+  steps:
+    - intent: request_details
+    - action: login_form
+    - active_loop: login_form
+    # - action: utter_ask_continue
+    # - intent: affirm
+    - action: login_form
+    - active_loop: null
+    # - action: utter_slots_values

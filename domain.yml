@@ -4,26 +4,64 @@ intents:
   - greet
   - goodbye
   - affirm
-  - deny
-  - mood_great
+  # - deny
+  # - mood_great
   - mood_unhappy
   - bot_challenge
-  - AgencyId
-  - Password
-  - request_details
+  # - AgencyId
+  # - Password
+  - request_details:
+      use_entities: []
+  - request_agencyid_password
 
+entities:
+  - AgencyID
+  - Password
+
+# slots:
+#   AgencyID:
+#   type: text
+#   auto-fill: false
+  
+#   Password:
+#   type: text
+#   auto-fill: false
 slots:
   AgencyID:
-  type: text
-  auto-fill: false
-  
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: AgencyID
+      intent: request_agencyid_password
+    # - type: from_text
+    #   intent: request_agencyid_password
   Password:
-  type: text
-  auto-fill: false
+    type: text
+    influence_conversation: false
+    mappings:
+    - type: from_entity
+      entity: Password
+      intent: request_agencyid_password
+    # - type: from_text
+    #   intent: request_agencyid_password
+
+forms:
+  login_form:
+    required_slots:
+      - AgencyID
+      - Password
+
 
 responses:
   utter_greet:
   - text: "Hey! How are you?"
+  - text: "Hey there! How can I help you?"
+  - text: "Hello, how can I help you?"
+  - text: "Hi there! How can I help you?"
+  - text: "Hello, how can I help you today?"
+  - text: "Hi there! How can I help you today?"
+
 
   utter_did_that_help:
   - text: "Did that help you?"
@@ -37,14 +75,17 @@ responses:
   utter_iamabot:
   - text: "I am a bot, powered by Rasa."
   
-  utter_AgencyID:
+  utter_ask_AgencyID:
   - text: "Please provide your AgencyID."
   
-  utter_Password:
+  utter_ask_Password:
   - text: "Please enter Password."
 
+  utter_successfull_login:
+  - text: "You have successfully logged in."
+
 actions:
-- action_login
+- validate_login_form
   
 session_config:
   session_expiration_time: 15

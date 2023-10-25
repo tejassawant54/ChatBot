@@ -1,0 +1,5 @@
+.rasa/
+debug_data/
+models/
+__pycache__/
+**/*.pyc
