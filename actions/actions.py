@@ -10,8 +10,9 @@
 from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker, FormValidationAction
-from rasa_sdk.events import SlotSet
+from rasa_sdk.events import SlotSet, EventType
 from rasa_sdk.executor import CollectingDispatcher
+from rasa_sdk.types import DomainDict
 # import psycopg2
 # import sqlite3
 from sqlalchemy import select, create_engine, Table, Column, Integer, String, MetaData
@@ -57,7 +58,7 @@ class ValidateLoginForm(FormValidationAction):
         #     dispatcher.utter_message("Invalid Agency ID. Please try again.")
         #     return {"AgencyID": None}
 
-    def validate_Password(self, value, dispatcher, tracker, domain):
+    def validate_Password(self, value, dispatcher: CollectingDispatcher, tracker: Tracker, domain: DomainDict):
 
         value = str(value)
         agency_id = tracker.get_slot("AgencyID")
@@ -70,7 +71,8 @@ class ValidateLoginForm(FormValidationAction):
         if results:
             print("Valid Password")
             dispatcher.utter_message("Login Successful")
-            return {"Password": value}
+
+            return [{"Password": value}, SlotSet("login_status", True)]
         else:
             print("Invalid Password")
             dispatcher.utter_message("Invalid Password. Please try again.")
@@ -84,8 +86,45 @@ class ValidateLoginForm(FormValidationAction):
         #     dispatcher.utter_message("Invalid Password. Please try again.")
         #     return {"Password": None}
 
+class BookingConfirmationNumberAction(Action):
 
+    def name(self) -> Text:
+        return "action_booking_confirmation_number"
+    
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: DomainDict):
 
+        agency_id = tracker.get_slot("AgencyID")
+
+        table = db.Table('user', metadata, autoload=True, autoload_with=engine)
+
+        stmt = db.select([table.columns.booking_confirmation_number]).where(table.columns.agency_id == agency_id)
+
+        results = conn.execute(stmt).fetchone()
+
+        if results:
+            print("Valid Confirmation Number")
+            dispatcher.utter_message("Your booking confirmation number is " + str(results[0]))
+            return []
+
+class PaymentStatusAction(Action):
+
+    def name(self) -> Text:
+        return "action_payment_status"
+    
+    def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: DomainDict ):
+
+        agency_id = tracker.get_slot("AgencyID")
+
+        table = db.Table('user', metadata, autoload=True, autoload_with=engine)
+
+        stmt = db.select([table.columns.payment_status]).where(table.columns.agency_id == agency_id)
+
+        results = conn.execute(stmt).fetchone()
+
+        if results:
+            print("Valid Confirmation Number")
+            dispatcher.utter_message("Your booking confirmation number is " + str(results[0]))
+            return []
 
 # class ActionLogin(Action):
 

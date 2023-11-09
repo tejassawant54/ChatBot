@@ -2,23 +2,37 @@ version: "3.1"
 
 stories:
 
-- story: happy path
+- story: Welcome user and login the user
   steps:
   - intent: greet
   - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
-  - user: |
-      Hi
-    intent: greet
-  - action: utter_greet
-  - user: |
-      I'm looking for my transaction details
-      I'm looking for my stay details
   - intent: request_details
   - action: login_form
+  - active_loop: login_form
   - active_loop: null
-  - action: utter_successfull_login
+
+- story: Requesting user details
+  steps:
+  - intent: user_login
+  - action: login_form
+  - active_loop: login_form
+  - active_loop: null
+  - intent: request_booking_confirmation_number
+  - action: action_booking_confirmation_number
+
+# - story: Booking confirmation number
+#   steps:
+#   - intent: request_booking_confirmation_number
+#   - action: action_booking_confirmation_number
+  
+
+#   - intent: request_booking_confirmation_number
+#   - action: action_booking_confirmation_number
+
+# - story: Requesting booking confirmation number
+#   steps:
+#   - intent: request_booking_confirmation_number
+#   - action: action_booking_confirmation_number
 
 
 # - story: 
