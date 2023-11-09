@@ -13,12 +13,12 @@ rules:
   - action: utter_iamabot
 
 - rule: activate request details form and validate slots
-  # wait_for_user_input: true
+  wait_for_user_input: true
   steps:
     - intent: request_details
     - action: login_form
     - active_loop: login_form
-    - slot_was_set:
-      - requested_slot: null
-    - action: login_form
-    - active_loop: null
+    # - slot_was_set:
+    #   - requested_slot: null
+    # - action: login_form
+    # - active_loop: null

@@ -13,6 +13,8 @@ intents:
   - request_details:
       use_entities: []
   - request_agencyid_password
+  - query_agency_id:
+      use_entities: [AgencyID]
 
 entities:
   - AgencyID
@@ -84,8 +86,23 @@ responses:
   utter_successfull_login:
   - text: "You have successfully logged in."
 
+  utter_agency_id_value:
+  - condition:
+    - type: slot
+      name: AgencyID
+      value: null
+    text: "Please provide your AgencyID."
+  - condition:
+    - type: slot
+      name: AgencyID
+      value: 
+    text: "Your AgencyID is {AgencyID}"
+
+  # - text: "Your AgencyID is {AgencyID}"
+
 actions:
 - validate_login_form
+# - utter_agency_id_value
   
 session_config:
   session_expiration_time: 15

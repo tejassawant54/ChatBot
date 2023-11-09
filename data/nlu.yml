@@ -30,59 +30,59 @@ nlu:
     - bye bye
     - see you later
 
-- intent: affirm
-  examples: |
-    - yes
-    - y
-    - indeed
-    - of course
-    - that sounds good
-    - correct
-    - intent: affirm
-    - yeah a cheap restaurant serving international food
-    - correct
-    - ye
-    - uh yes
-    - let's do it
-    - yeah
-    - uh yes
-    - um yes
-    - yes knocking
-    - that's correct
-    - yes yes
-    - right
-    - yea
-    - yes
-    - yes right
-    - yes and i dont care
-    - right on
-    - i love that
+# - intent: affirm
+#   examples: |
+#     - yes
+#     - y
+#     - indeed
+#     - of course
+#     - that sounds good
+#     - correct
+#     - intent: affirm
+#     - yeah a cheap restaurant serving international food
+#     - correct
+#     - ye
+#     - uh yes
+#     - let's do it
+#     - yeah
+#     - uh yes
+#     - um yes
+#     - yes knocking
+#     - that's correct
+#     - yes yes
+#     - right
+#     - yea
+#     - yes
+#     - yes right
+#     - yes and i dont care
+#     - right on
+#     - i love that
 
-- intent: deny
-  examples: |
-    - no
-    - n
-    - never
-    - I don't think so
-    - don't like that
-    - no way
-    - not really
+# - intent: deny
+#   examples: |
+#     - no
+#     - n
+#     - never
+#     - I don't think so
+#     - don't like that
+#     - no way
+#     - not really
 
-- intent: request_agencyid_password
-  examples: |
-    - The agencyID is [23792069](AgencyID) and the password is [pwd-23792069](Password)
-    - Here you go [23792069](AgencyID) and [pwd-23792069](Password)
-    - [23792069](AgencyID) and [pwd-23792069](Password)
-    - Okay [23792069](AgencyID) and [pwd-23792069](Password)
-    - [23792069](AgencyID) and [pwd-23792069](Password) is the agencyID and password
-    - as requested [23792069](AgencyID) and [pwd-23792069](Password)
-    - [pwd-23792069](Password) and [23792069](AgencyID)
-    - [pwd-23792069](Password) and [23792069](AgencyID) is the password and agencyID
-    - [AIO-23792069](Password) and [23792069](AgencyID)
-    - [AIO-23792069](Password) and [23792069](AgencyID) is the password and agencyID
-    - The AgencyID is [23792069](AgencyID) and the password is [AIO-20772469](Password)
-    - Here you go [23792069](AgencyID) and [AIO-23792069](Password)
-    - [23792069](AgencyID) and [AIO-23792069](Password)
+# - intent: request_agencyid_password
+#   examples: |
+#     - The agencyID is [23792069](AgencyID) and the password is [pwd-23792069](Password)
+#     - Here you go [23792069](AgencyID) and [pwd-23792069](Password)
+#     - [23792069](AgencyID) and [pwd-23792069](Password)
+#     - Okay [23792069](AgencyID) and [pwd-23792069](Password)
+#     - [23792069](AgencyID) and [pwd-23792069](Password) is the agencyID and password
+#     - as requested [23792069](AgencyID) and [pwd-23792069](Password)
+#     - [pwd-23792069](Password) and [23792069](AgencyID)
+#     - [pwd-23792069](Password) and [23792069](AgencyID) is the password and agencyID
+#     - [AIO-23792069](Password) and [23792069](AgencyID)
+#     - [AIO-23792069](Password) and [23792069](AgencyID) is the password and agencyID
+#     - The AgencyID is [23792069](AgencyID) and the password is [AIO-20772469](Password)
+#     - Here you go [23792069](AgencyID) and [AIO-23792069](Password)
+#     - [23792069](AgencyID) and [AIO-23792069](Password)
 
 - intent: stop
   examples: |
@@ -134,4 +134,12 @@ nlu:
     - When is my checkin date?
     - I want to know my checkin date.
     - I want to know my checkout date.
+
+- intent: query_agency_id
+  examples: |
+    - What is my agency ID?
+    - AgencyID?
+    - Can you tell me my agency ID?
+    - What is my agency ID?
+    - What is my agency ID?
 

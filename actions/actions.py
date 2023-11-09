@@ -12,8 +12,8 @@ from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.events import SlotSet
 from rasa_sdk.executor import CollectingDispatcher
-import psycopg2
-import sqlite3
+# import psycopg2
+# import sqlite3
 from sqlalchemy import select, create_engine, Table, Column, Integer, String, MetaData
 import sqlalchemy as db
 
