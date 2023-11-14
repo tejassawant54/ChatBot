@@ -3,20 +3,21 @@ version: "3.1"
 intents:
   - greet
   - goodbye
-  - affirm
-  # - deny
-  # - mood_great
-  - mood_unhappy
-  - bot_challenge
-  # - AgencyId
-  # - Password
   - request_details:
       use_entities: []
   - request_agencyid_password
+  - query_agency_id:
+      use_entities: [AgencyID]
+  - user_login
+  - request_booking_confirmation_number
+  - request_payment_status
+  - only_agency_id
+  - only_password
 
 entities:
   - AgencyID
   - Password
+  - login_status
 
 # slots:
 #   AgencyID:
@@ -29,22 +30,40 @@ entities:
 slots:
   AgencyID:
     type: text
-    influence_conversation: false
+    influence_conversation: true
     mappings:
     - type: from_entity
       entity: AgencyID
       intent: request_agencyid_password
+    - type: from_entity
+      intent: only_agency_id
+      entity: AgencyID
     # - type: from_text
     #   intent: request_agencyid_password
   Password:
     type: text
-    influence_conversation: false
+    influence_conversation: true
     mappings:
     - type: from_entity
       entity: Password
       intent: request_agencyid_password
+    - type: from_entity
+      intent: only_password
+      entity: Password
     # - type: from_text
     #   intent: request_agencyid_password
+  login_status:
+    type: bool
+    influence_conversation: false
+    initial_value: false
+    mappings:
+    - type: custom
+  AgencyName:
+    type: text
+    influence_conversation: false
+    initial_value: null
+    mappings:
+    - type: custom
 
 forms:
   login_form:
@@ -54,6 +73,7 @@ forms:
 
 
 responses:
+
   utter_greet:
   - text: "Hey! How are you?"
   - text: "Hey there! How can I help you?"
@@ -61,6 +81,29 @@ responses:
   - text: "Hi there! How can I help you?"
   - text: "Hello, how can I help you today?"
   - text: "Hi there! How can I help you today?"
+
+  utter_greet_start:
+  - text: "Hey! How are you doing? \nPlease type 'login' when you want the status details"
+
+
+  utter_request_login_details:
+  - text: "Please provide your AgencyID and Password, so that we can help you."
+  - text: "Please provide your AgencyID and Password, to proceed further."
+
+  utter_login_status:
+  - condition:
+    - type: slot
+      name: login_status
+      value: false
+    text: "Login failed, so that we can help you."
+  - condition:
+    - type: slot
+      name: login_status
+      value: true
+    text: "You have successfully logged in, Hi {AgencyName}"
+
+  utter_payment_status:
+  - text: status is {status}
 
 
   utter_did_that_help:
@@ -84,8 +127,26 @@ responses:
   utter_successfull_login:
   - text: "You have successfully logged in."
 
+  utter_agency_id_value:
+  - condition:
+    - type: slot
+      name: AgencyID
+      value: null
+    text: "Please provide your AgencyID."
+  - condition:
+    - type: slot
+      name: AgencyID
+      value: 
+    text: "Your AgencyID is {AgencyID}"
+
+  # - text: "Your AgencyID is {AgencyID}"
+
 actions:
 - validate_login_form
+- action_booking_confirmation_number
+- action_payment_status
+- action_populate_agency_name
+# - utter_agency_id_value
   
 session_config:
   session_expiration_time: 15

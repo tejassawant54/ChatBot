@@ -2,22 +2,46 @@ version: "3.1"
 
 stories:
 
-- story: happy path
+- story: Welcome user and login the user
   steps:
   - intent: greet
   - action: utter_greet
-  - intent: mood_great
-  - action: utter_happy
-  - user: |
-      Hi
-    intent: greet
-  - action: utter_greet
-  - user: |
-      I'm looking for my transaction details
-      I'm looking for my stay details
   - intent: request_details
   - action: login_form
+  - active_loop: login_form
   - active_loop: null
+  - action: action_populate_agency_name
+  - action: utter_login_status
+
+- story: Requesting user details
+  steps:
+  - intent: user_login
+  - action: login_form
+  - active_loop: login_form
+  - active_loop: null
+  - action: action_populate_agency_name
+  - action: utter_login_status
+  - intent: request_booking_confirmation_number
+  - action: action_booking_confirmation_number
+  - intent: request_payment_status
+  - action: action_payment_status
+
+# - story: Booking confirmation number
+#   steps:
+#   - intent: request_booking_confirmation_number
+#   - action: action_booking_confirmation_number
+  
+
+#   - intent: request_booking_confirmation_number
+#   - action: action_booking_confirmation_number
+
+# - story: Requesting booking confirmation number
+#   steps:
+#   - intent: request_booking_confirmation_number
+#   - action: action_booking_confirmation_number
+
+
+# - story: 
 
 # - story: user authentication
 #   steps:
@@ -35,6 +59,12 @@ stories:
     - active_loop: login_form
     # - action: utter_ask_continue
     # - intent: affirm
-    - action: login_form
-    - active_loop: null
+    # - action: login_form
+    # - active_loop: null
     # - action: utter_slots_values
+
+- story: requesting agency id
+  steps:
+  - intent: query_agency_id
+  - action: utter_agency_id_value
+  

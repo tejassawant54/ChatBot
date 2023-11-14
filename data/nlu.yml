@@ -30,43 +30,43 @@ nlu:
     - bye bye
     - see you later
 
-- intent: affirm
-  examples: |
-    - yes
-    - y
-    - indeed
-    - of course
-    - that sounds good
-    - correct
-    - intent: affirm
-    - yeah a cheap restaurant serving international food
-    - correct
-    - ye
-    - uh yes
-    - let's do it
-    - yeah
-    - uh yes
-    - um yes
-    - yes knocking
-    - that's correct
-    - yes yes
-    - right
-    - yea
-    - yes
-    - yes right
-    - yes and i dont care
-    - right on
-    - i love that
+# - intent: affirm
+#   examples: |
+#     - yes
+#     - y
+#     - indeed
+#     - of course
+#     - that sounds good
+#     - correct
+#     - intent: affirm
+#     - yeah a cheap restaurant serving international food
+#     - correct
+#     - ye
+#     - uh yes
+#     - let's do it
+#     - yeah
+#     - uh yes
+#     - um yes
+#     - yes knocking
+#     - that's correct
+#     - yes yes
+#     - right
+#     - yea
+#     - yes
+#     - yes right
+#     - yes and i dont care
+#     - right on
+#     - i love that
 
-- intent: deny
-  examples: |
-    - no
-    - n
-    - never
-    - I don't think so
-    - don't like that
-    - no way
-    - not really
+# - intent: deny
+#   examples: |
+#     - no
+#     - n
+#     - never
+#     - I don't think so
+#     - don't like that
+#     - no way
+#     - not really
 
 - intent: request_agencyid_password
   examples: |
@@ -76,13 +76,32 @@ nlu:
     - Okay [23792069](AgencyID) and [pwd-23792069](Password)
     - [23792069](AgencyID) and [pwd-23792069](Password) is the agencyID and password
     - as requested [23792069](AgencyID) and [pwd-23792069](Password)
-    - [pwd-23792069](Password) and [23792069](AgencyID)
-    - [pwd-23792069](Password) and [23792069](AgencyID) is the password and agencyID
+    - [AIO-23792073](Password) and [23792069](AgencyID)
+    - [AIO-23792073](Password) and [23792069](AgencyID) is the password and agencyID
     - [AIO-23792069](Password) and [23792069](AgencyID)
     - [AIO-23792069](Password) and [23792069](AgencyID) is the password and agencyID
     - The AgencyID is [23792069](AgencyID) and the password is [AIO-20772469](Password)
     - Here you go [23792069](AgencyID) and [AIO-23792069](Password)
     - [23792069](AgencyID) and [AIO-23792069](Password)
+    - [IH551352](AgencyID) and [pwd-112101IH](Password)
+    - Okay [IH551352](AgencyID) and [pwd-112101IH](Password)
+
+- intent: only_agency_id
+  examples: |
+    - The agencyID is [23792069](AgencyID)
+    - Here you go [23792069](AgencyID)
+    - [3255ABCD](AgencyID)
+    - Okay [23792069](AgencyID)
+    - [2343637AB](AgencyID) is the agencyID
+
+- intent: only_password
+  examples: |
+    - The password is [AIO-23792069](Password)
+    - Here you go [pwd-23792069](Password)
+    - [pwd-3255ABCD](Password)
+    - Okay [pwd-23792069](Password)
+    - [AIO-2343637AB](Password) is the password
+
 
 - intent: stop
   examples: |
@@ -106,12 +125,12 @@ nlu:
     - and that's it?
     - nothing else?
 
-- intent: bot_challenge
-  examples: |
-    - are you a bot?
-    - are you a human?
-    - am I talking to a bot?
-    - am I talking to a human?
+# - intent: bot_challenge
+#   examples: |
+#     - are you a bot?
+#     - are you a human?
+#     - am I talking to a bot?
+#     - am I talking to a human?
      
 # - intent: AgencyId
 #   examples: |
@@ -134,4 +153,35 @@ nlu:
     - When is my checkin date?
     - I want to know my checkin date.
     - I want to know my checkout date.
+
+- intent: query_agency_id
+  examples: |
+    - What is my agency ID?
+    - AgencyID?
+    - Can you tell me my agency ID?
+    - What is my agency ID?
+    - What is my agency ID?
+
+- intent: user_login
+  examples: |
+    - login
+    - login please
+    - i want to login
+    - i want to login please
+
+- intent: request_booking_confirmation_number
+  examples: |
+    - I want to know my booking confirmation number.
+    - What is my booking confirmation number?
+    - Can you tell me my booking confirmation number?
+    - echo my booking confirmation number
+    - booking confirmation number please
+
+- intent: request_payment_status
+  examples: |
+    - I want to know the payment status of my booking.
+    - What is the payment status of my booking?
+    - Can you tell me the payment status of my booking?
+    - echo my payment status
+    - payment status please
 

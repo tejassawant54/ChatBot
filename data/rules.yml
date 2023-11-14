@@ -1,24 +1,115 @@
 version: "3.1"
 
 rules:
+  - rule: Say goodbye anytime the user says goodbye
+    steps:
+    - intent: goodbye
+    - action: utter_goodbye
 
-- rule: Say goodbye anytime the user says goodbye
-  steps:
-  - intent: goodbye
-  - action: utter_goodbye
 
-- rule: Say 'I am a bot' anytime the user challenges
-  steps:
-  - intent: bot_challenge
-  - action: utter_iamabot
+  # - rule: activate request details form and validate slots
+  #   wait_for_user_input: true
+  #   steps:
+  #     - intent: request_details
+  #     - action: login_form
+  #     - active_loop: login_form
+      # - slot_was_set:
+      #   - requested_slot: null
+      # - action: login_form
+      # - active_loop: null
 
-- rule: activate request details form and validate slots
-  # wait_for_user_input: true
-  steps:
-    - intent: request_details
+  # - rule: Force-break form
+  #   steps:
+  #   - intent: greet
+  #   - action: utter_greet
+  #   - active_loop: null
+    # - action: action_back_to_greet
+    # - action: utter_greet
+
+  # - rule: request user login credentials
+  #   steps: 
+  #   - intent: greet
+  #   - slot_was_set:
+  #     - login_status: false
+  #   - active_loop: null
+  #   - action: login_form
+  #   - active_loop: login_form
+  #   - slot_was_set:
+  #     - login_status: true
+  #   wait_for_user_input: true
+  
+  # - rule: Request user details if not logged in
+  #   condition:
+  #   - slot_was_set:
+  #     - login_status: false
+  #   steps:
+  #   - intent: request_details
+  #   - action: login_form
+  #   - active_loop: login_form
+  #   - slot_was_set:
+  #     - login_status: true
+  #   wait_for_user_input: true
+
+  # - rule: handling active loops and forms - login_form
+  #   condition:
+  #   - active_loop: login_form
+  #   steps:
+  #   - action: login_form
+  #   - active_loop: null
+  
+  - rule: Asctivate Login Form
+    condition: 
+    - slot_was_set:
+      - login_status: false
+    steps:
+    - intent: user_login
     - action: login_form
     - active_loop: login_form
-    - slot_was_set:
-      - requested_slot: null
+
+  - rule: Deactivate Login Form
+    condition: 
+    - active_loop: login_form
+    steps:
     - action: login_form
     - active_loop: null
+    - slot_was_set:
+      - requested_slot: null
+    - action: action_populate_agency_name
+    - action: utter_login_status
+
+  - rule: Booking Confirmation Number
+    steps:
+    - intent: request_booking_confirmation_number
+    - action: action_booking_confirmation_number
+
+  - rule: Payment status
+    steps:
+    - intent: request_payment_status
+    - action: action_payment_status
+
+
+    
+  # - rule: Request user login credentials
+  #   condition:
+  #   - slot_was_set:
+  #     - login_status: false
+  #   steps:
+  #   - intent: user_login
+  #   - action: login_form
+  #   - active_loop: login_form
+  #   - slot_was_set:
+  #     - login_status: true
+  #   - action: utter_login_status
+  #   # - slot_was_set:
+  #   #   - login_status: false
+  #   # - action: utter_login_status
+  #   wait_for_user_input: true
+  
+  # - rule: Request user login credentials already logged in
+  #   condition:
+  #   - slot_was_set:
+  #     - login_status: true
+  #   steps:
+  #   - intent: user_login
+  #   - action: utter_login_status
+    
