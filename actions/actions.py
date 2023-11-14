@@ -72,7 +72,7 @@ class ValidateLoginForm(FormValidationAction):
             print("Valid Password")
             dispatcher.utter_message("Login Successful")
 
-            return [{"Password": value}, SlotSet("login_status", True)]
+            return {"Password": value, "login_status": True}
         else:
             print("Invalid Password")
             dispatcher.utter_message("Invalid Password. Please try again.")
@@ -85,6 +85,25 @@ class ValidateLoginForm(FormValidationAction):
         #     print("Invalid Password")
         #     dispatcher.utter_message("Invalid Password. Please try again.")
         #     return {"Password": None}
+
+class PopulateAgencyNameAction(Action):
+    def name(self) -> Text:
+        return "action_populate_agency_name"
+    
+    def run(self,dispatcher: CollectingDispatcher, tracker: Tracker, domain: DomainDict):
+
+        agency_id = tracker.get_slot("AgencyID")
+
+        table = db.Table('user', metadata, autoload=True, autoload_with=engine)
+
+        stmt = db.select([table.columns.agency_name]).where(table.columns.agency_id == agency_id)
+
+        results = conn.execute(stmt).fetchone()
+
+        if results:
+            print("Setting Agency Name")
+            # dispatcher.utter_message("Your booking confirmation number is " + str(results[0]))
+            return [SlotSet("AgencyName", results[0])]
 
 class BookingConfirmationNumberAction(Action):
 
@@ -123,7 +142,7 @@ class PaymentStatusAction(Action):
 
         if results:
             print("Valid Confirmation Number")
-            dispatcher.utter_message("Your booking confirmation number is " + str(results[0]))
+            dispatcher.utter_message("Your Payment status is " + str(results[0]))
             return []
 
 # class ActionLogin(Action):

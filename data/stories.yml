@@ -10,6 +10,8 @@ stories:
   - action: login_form
   - active_loop: login_form
   - active_loop: null
+  - action: action_populate_agency_name
+  - action: utter_login_status
 
 - story: Requesting user details
   steps:
@@ -17,8 +19,12 @@ stories:
   - action: login_form
   - active_loop: login_form
   - active_loop: null
+  - action: action_populate_agency_name
+  - action: utter_login_status
   - intent: request_booking_confirmation_number
   - action: action_booking_confirmation_number
+  - intent: request_payment_status
+  - action: action_payment_status
 
 # - story: Booking confirmation number
 #   steps:

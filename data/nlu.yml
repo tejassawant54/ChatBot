@@ -94,6 +94,14 @@ nlu:
     - Okay [23792069](AgencyID)
     - [2343637AB](AgencyID) is the agencyID
 
+- intent: only_password
+  examples: |
+    - The password is [AIO-23792069](Password)
+    - Here you go [pwd-23792069](Password)
+    - [pwd-3255ABCD](Password)
+    - Okay [pwd-23792069](Password)
+    - [AIO-2343637AB](Password) is the password
+
 
 - intent: stop
   examples: |
@@ -168,4 +176,12 @@ nlu:
     - Can you tell me my booking confirmation number?
     - echo my booking confirmation number
     - booking confirmation number please
+
+- intent: request_payment_status
+  examples: |
+    - I want to know the payment status of my booking.
+    - What is the payment status of my booking?
+    - Can you tell me the payment status of my booking?
+    - echo my payment status
+    - payment status please
 
