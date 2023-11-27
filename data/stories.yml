@@ -2,29 +2,103 @@ version: "3.1"
 
 stories:
 
-- story: Welcome user and login the user
-  steps:
-  - intent: greet
-  - action: utter_greet
-  - intent: request_details
-  - action: login_form
-  - active_loop: login_form
-  - active_loop: null
-  - action: action_populate_agency_name
-  - action: utter_login_status
+# - story: Welcome user and login the new user
+#   steps:
+#   - intent: greet
+#   - action: utter_greet
+#   - slot_was_set:
+#     - login_status: false
+#   - action: login_form
+#   - active_loop: login_form
+#   - action: action_populate_agency_name
+#   - action: utter_login_status
 
-- story: Requesting user details
-  steps:
-  - intent: user_login
-  - action: login_form
-  - active_loop: login_form
-  - active_loop: null
-  - action: action_populate_agency_name
-  - action: utter_login_status
-  - intent: request_booking_confirmation_number
-  - action: action_booking_confirmation_number
-  - intent: request_payment_status
-  - action: action_payment_status
+# - story: Welcome user and help the existing user
+#   steps:
+#   - intent: greet
+#   - action: utter_greet
+#   - slot_was_set:
+#     - login_status: true
+#   - action: utter_greet
+#   - action: utter_how_can_i_help
+
+# - story: Requesting user details
+#   steps:
+#   - intent: user_login
+#   - action: login_form
+#   - active_loop: login_form
+#   - action: action_populate_agency_name
+#   - action: utter_login_status
+  # - intent: request_booking_confirmation_number
+  # - slot_was_set:
+  #   - login_status: true
+  # - action: action_booking_confirmation_number
+  # - intent: request_payment_status
+  # - slot_was_set:
+  #   - login_status: true
+  # - action: action_payment_status
+
+# - story: Ending conversation in the middle
+#   steps:
+#   - intent: user_login
+#   - action: login_form
+#   - active_loop: login_form
+#   - intent: goodbye
+#   - active_loop: null
+#   - action: action_conversation_reset
+#   - action: utter_goodbye
+
+# - story: Ending conversation in the middle user login
+#   steps:
+#   - intent: request_details
+#   - action: login_form
+#   - active_loop: login_form
+#   - intent: goodbye
+#   - active_loop: null
+#   - action: action_conversation_reset
+#   - action: utter_goodbye
+
+# - story: Requesting payment status with Empty Slots
+#   steps:
+#   - intent: request_payment_status
+#   - slot_was_set:
+#     - login_status: false
+#   - action: utter_request_login
+#   - action: login_form
+#   - active_loop: login_form
+#   - active_loop: null
+#   - action: action_populate_agency_name
+#   - action: utter_login_status
+#   - action: action_payment_status
+
+# - story: Requesting booking confirmation number Empty Slots
+#   steps:
+#   - intent: request_booking_confirmation_number
+#   - slot_was_set:
+#     - login_status: false
+#   - action: utter_request_login
+  # - action: login_form
+  # - active_loop: login_form
+  # - active_loop: null
+  # - action: action_populate_agency_name
+  # - action: utter_login_status
+  # - action: action_booking_confirmation_number
+
+# - story: Requesting booking confirmation number with slots filled
+#   steps:
+#   - intent: request_booking_confirmation_number
+#   - slot_was_set:
+#     - login_status: true
+#   - action: action_booking_confirmation_number
+
+# - story: Requesting payment status with slots filled
+#   steps:
+#   - intent: request_payment_status
+#   - slot_was_set:
+#     - login_status: true
+#   - action: action_payment_status
+  
+
 
 # - story: Booking confirmation number
 #   steps:
@@ -52,19 +126,142 @@ stories:
 #   - intent: Password
 #   - action: action_login
 
-- story: continue
-  steps:
-    - intent: request_details
-    - action: login_form
-    - active_loop: login_form
+# - story: continue
+#   steps:
+#     - intent: request_details
+#     - action: login_form
+#     - active_loop: login_form
     # - action: utter_ask_continue
     # - intent: affirm
     # - action: login_form
     # - active_loop: null
     # - action: utter_slots_values
 
-- story: requesting agency id
+# - story: requesting agency id
+#   steps:
+#   - intent: query_agency_id
+#   - action: utter_agency_id_value
+
+- story: interactive_story_1
   steps:
-  - intent: query_agency_id
-  - action: utter_agency_id_value
-  
+  - intent: greet
+  - action: utter_greet
+  - action: login_form
+  - active_loop: login_form
+  - slot_was_set:
+    - requested_slot: AgencyID
+  - intent: only_agency_id
+    entities:
+    - AgencyID: 2343637AB
+  - slot_was_set:
+    - AgencyID: 2343637AB
+  - action: login_form
+  - slot_was_set:
+    - AgencyID: 2343637AB
+  - slot_was_set:
+    - requested_slot: Password
+  - intent: request_agencyid_password
+    entities:
+    - Password: AIO-23792070
+  - slot_was_set:
+    - Password: AIO-23792070
+  - action: login_form
+  - slot_was_set:
+    - Password: AIO-23792070
+  - slot_was_set:
+    - login_status: true
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - intent: request_booking_confirmation_number
+  - action: action_booking_confirmation_number
+  - intent: request_payment_status
+  - action: action_payment_status
+  - intent: goodbye
+  - action: action_conversation_reset
+  - action: utter_goodbye
+
+- story: interactive_story_2
+  steps:
+  - intent: greet
+  - action: utter_greet
+  - action: login_form
+  - active_loop: login_form
+  - slot_was_set:
+    - requested_slot: AgencyID
+  - intent: only_agency_id
+    entities:
+    - AgencyID: 2343637AB
+  - slot_was_set:
+    - AgencyID: 2343637AB
+  - action: login_form
+  - slot_was_set:
+    - AgencyID: 2343637AB
+  - slot_was_set:
+    - requested_slot: Password
+  - intent: request_agencyid_password
+    entities:
+    - Password: AIO-23792070
+  - slot_was_set:
+    - Password: AIO-23792070
+  - action: login_form
+  - slot_was_set:
+    - Password: AIO-23792070
+  - slot_was_set:
+    - login_status: true
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_populate_agency_name
+  - slot_was_set:
+    - AgencyName: Booking.com
+  - intent: request_booking_confirmation_number
+  - action: action_booking_confirmation_number
+  - intent: request_payment_status
+  - action: action_payment_status
+  - intent: greet
+  - action: utter_greet
+  - action: utter_how_can_i_help
+  - intent: goodbye
+  - action: action_conversation_reset
+  - action: utter_goodbye
+  - intent: greet
+  - action: utter_greet
+  - action: login_form
+  - active_loop: login_form
+  - slot_was_set:
+    - requested_slot: AgencyID
+  - intent: only_agency_id
+    entities:
+    - AgencyID: 2343637AB
+  - slot_was_set:
+    - AgencyID: 2343637AB
+  - action: login_form
+  - slot_was_set:
+    - AgencyID: 2343637AB
+  - slot_was_set:
+    - requested_slot: Password
+  - intent: only_password
+    entities:
+    - Password: AIO-23792070
+  - slot_was_set:
+    - Password: AIO-23792070
+  - action: login_form
+  - slot_was_set:
+    - Password: AIO-23792070
+  - slot_was_set:
+    - login_status: true
+  - slot_was_set:
+    - requested_slot: null
+  - active_loop: null
+  - action: action_populate_agency_name
+  - slot_was_set:
+    - AgencyName: Booking.com
+  - intent: greet
+  - action: utter_greet
+  - action: utter_how_can_i_help
+  - intent: request_booking_confirmation_number
+  - action: action_booking_confirmation_number
+  - intent: goodbye
+  - action: action_conversation_reset
+  - action: utter_goodbye

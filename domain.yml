@@ -1,32 +1,22 @@
-version: "3.1"
-
+version: '3.1'
 intents:
-  - greet
-  - goodbye
-  - request_details:
-      use_entities: []
-  - request_agencyid_password
-  - query_agency_id:
-      use_entities: [AgencyID]
-  - user_login
-  - request_booking_confirmation_number
-  - request_payment_status
-  - only_agency_id
-  - only_password
-
+- goodbye
+- greet
+- only_agency_id
+- only_password
+- query_agency_id:
+    use_entities:
+    - AgencyID
+- request_agencyid_password
+- request_booking_confirmation_number
+- request_details:
+    use_entities: []
+- request_payment_status
+- user_login
 entities:
-  - AgencyID
-  - Password
-  - login_status
-
-# slots:
-#   AgencyID:
-#   type: text
-#   auto-fill: false
-  
-#   Password:
-#   type: text
-#   auto-fill: false
+- Password
+- AgencyID
+- login_status
 slots:
   AgencyID:
     type: text
@@ -38,8 +28,6 @@ slots:
     - type: from_entity
       intent: only_agency_id
       entity: AgencyID
-    # - type: from_text
-    #   intent: request_agencyid_password
   Password:
     type: text
     influence_conversation: true
@@ -50,104 +38,94 @@ slots:
     - type: from_entity
       intent: only_password
       entity: Password
-    # - type: from_text
-    #   intent: request_agencyid_password
   login_status:
     type: bool
-    influence_conversation: false
+    influence_conversation: true
     initial_value: false
     mappings:
     - type: custom
   AgencyName:
     type: text
-    influence_conversation: false
+    influence_conversation: true
     initial_value: null
     mappings:
     - type: custom
-
 forms:
   login_form:
     required_slots:
-      - AgencyID
-      - Password
-
-
+    - AgencyID
+    - Password
 responses:
-
   utter_greet:
-  - text: "Hey! How are you?"
-  - text: "Hey there! How can I help you?"
-  - text: "Hello, how can I help you?"
-  - text: "Hi there! How can I help you?"
-  - text: "Hello, how can I help you today?"
-  - text: "Hi there! How can I help you today?"
-
+  - text: Hey! How are you?
+  - text: Hey there! How can I help you?
+  - text: Hello, how can I help you?
+  - text: Hi there! How can I help you?
+  - text: Hello, how can I help you today?
+  - text: Hi there! How can I help you today?
+  utter_how_can_i_help:
+  - text: How can I help you?
+  - text: How can I help you today?
+  - text: Is there anything I can help you with?
+  - text: What can I do for you today?
+  - text: What can I help you with today?
   utter_greet_start:
-  - text: "Hey! How are you doing? \nPlease type 'login' when you want the status details"
-
-
+  - text: |-
+      Hey! How are you doing? 
+      Please type 'login' when you want the status details
   utter_request_login_details:
-  - text: "Please provide your AgencyID and Password, so that we can help you."
-  - text: "Please provide your AgencyID and Password, to proceed further."
-
+  - text: Please provide your AgencyID and Password, so that we can help you.
+  - text: Please provide your AgencyID and Password, to proceed further.
   utter_login_status:
   - condition:
     - type: slot
       name: login_status
       value: false
-    text: "Login failed, so that we can help you."
+    text: Login failed, so that we can help you.
   - condition:
     - type: slot
       name: login_status
       value: true
-    text: "You have successfully logged in, Hi {AgencyName}"
-
+    text: You have successfully logged in, Hi {AgencyName}
+  utter_request_login:
+  - text: Please type 'login' when you want the status details
+  - text: Please type 'hello' when you want the status details
   utter_payment_status:
   - text: status is {status}
-
-
   utter_did_that_help:
-  - text: "Did that help you?"
-
+  - text: Did that help you?
   utter_happy:
-  - text: "Great, carry on!"
-
+  - text: Great, carry on!
   utter_goodbye:
-  - text: "Bye"
-
+  - text: Bye
   utter_iamabot:
-  - text: "I am a bot, powered by Rasa."
-  
+  - text: I am a bot, powered by Rasa.
   utter_ask_AgencyID:
-  - text: "Please provide your AgencyID."
-  
+  - text: Please provide your AgencyID.
   utter_ask_Password:
-  - text: "Please enter Password."
-
+  - text: Please enter Password.
   utter_successfull_login:
-  - text: "You have successfully logged in."
-
+  - text: You have successfully logged in. with status {login_status}
   utter_agency_id_value:
   - condition:
     - type: slot
       name: AgencyID
       value: null
-    text: "Please provide your AgencyID."
+    text: Please provide your AgencyID.
   - condition:
     - type: slot
       name: AgencyID
-      value: 
-    text: "Your AgencyID is {AgencyID}"
-
-  # - text: "Your AgencyID is {AgencyID}"
-
+      value: null
+    text: Your AgencyID is {AgencyID}
 actions:
-- validate_login_form
-- action_booking_confirmation_number
-- action_payment_status
 - action_populate_agency_name
-# - utter_agency_id_value
-  
+- action_conversation_reset
+- utter_goodbye
+- utter_greet
+- action_payment_status
+- action_booking_confirmation_number
+- utter_how_can_i_help
+- validate_login_form
 session_config:
   session_expiration_time: 15
   carry_over_slots_to_new_session: true
