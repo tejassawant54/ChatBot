@@ -112,11 +112,7 @@ responses:
       name: AgencyID
       value: null
     text: Please provide your AgencyID.
-  - condition:
-    - type: slot
-      name: AgencyID
-      value: null
-    text: Your AgencyID is {AgencyID}
+  - text: Your AgencyID is {AgencyID}
 actions:
 - action_populate_agency_name
 - action_conversation_reset

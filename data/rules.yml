@@ -77,17 +77,11 @@ rules:
     # - action: 
 
   - rule: Booking Confirmation Number
-    condition:
-    - slot_was_set:
-      - login_status: true
     steps:
     - intent: request_booking_confirmation_number
     - action: action_booking_confirmation_number
 
   - rule: Payment status
-    condition:
-    - slot_was_set:
-      - login_status: true
     steps:
     - intent: request_payment_status
     - action: action_payment_status
