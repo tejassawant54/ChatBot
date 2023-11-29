@@ -121,6 +121,11 @@ class BookingConfirmationNumberAction(Action):
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: DomainDict):
 
         agency_id = tracker.get_slot("AgencyID")
+        login_status = tracker.get_slot("login_status")
+
+        if login_status == False:
+            dispatcher.utter_message("Please login to continue")
+            return []
 
         table = db.Table('user', metadata, autoload=True, autoload_with=engine)
 
