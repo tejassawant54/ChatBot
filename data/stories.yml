@@ -2,11 +2,13 @@ version: "3.1"
 
 stories:
 
-- story: Welcome user and login the new user
+- story: Welcome user
   steps:
   - intent: greet
   - action: utter_greet
   - intent: goodbye
+  - action: action_deactivate_loop
+  - active_loop: null
   - action: action_conversation_reset
   - action: utter_goodbye
 
@@ -28,6 +30,7 @@ stories:
   - action: login_form
   - active_loop: login_form
   - intent: goodbye
+  - action: action_deactivate_loop
   - action: action_conversation_reset
   - action: utter_goodbye
   - intent: request_booking_confirmation_number
@@ -41,6 +44,7 @@ stories:
   - action: login_form
   - active_loop: login_form
   - intent: goodbye
+  - action: action_deactivate_loop
   - active_loop: null
   - action: action_conversation_reset
   - action: utter_goodbye
@@ -68,16 +72,16 @@ stories:
 #   - action: utter_login_status
 #   - action: action_payment_status
 
-- story: Requesting booking confirmation number Empty Slots
-  steps:
-  - intent: request_booking_confirmation_number
-  - action: utter_request_login
-  - action: login_form
-  - active_loop: login_form
-  - active_loop: null
-  - action: action_populate_agency_name
-  - action: utter_login_status
-  - action: action_booking_confirmation_number
+# - story: Requesting booking confirmation number Empty Slots
+#   steps:
+#   - intent: request_booking_confirmation_number
+#   - action: utter_request_login
+#   - action: login_form
+#   - active_loop: login_form
+#   - active_loop: null
+#   - action: action_populate_agency_name
+#   - action: utter_login_status
+#   - action: action_booking_confirmation_number
 
 - story: Requesting booking confirmation number with slots filled
   steps:

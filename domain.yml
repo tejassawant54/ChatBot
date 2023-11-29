@@ -114,10 +114,10 @@ responses:
     text: Please provide your AgencyID.
   - text: Your AgencyID is {AgencyID}
 actions:
-- action_populate_agency_name
-- action_conversation_reset
 - utter_goodbye
 - utter_greet
+- action_conversation_reset
+- action_populate_agency_name
 - action_payment_status
 - action_booking_confirmation_number
 - utter_how_can_i_help

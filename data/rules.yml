@@ -90,6 +90,17 @@ rules:
   - rule: Reset Conversations
     steps:
     - intent: goodbye
+    - action: action_deactivate_loop
+    - active_loop: null
+    - action: action_conversation_reset
+    - action: utter_goodbye
+
+  - rule: Rsset conversation in the middle
+    condition:
+    - active_loop: login_form
+    steps:
+    - intent: goodbye
+    - action: action_deactivate_loop
     - active_loop: null
     - action: action_conversation_reset
     - action: utter_goodbye

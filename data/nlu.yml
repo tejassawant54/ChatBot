@@ -47,6 +47,7 @@ nlu:
     - and you call yourself bot company? pff
     - and that's it?
     - nothing else?
+    - byee
 - intent: request_agencyid_password
   examples: |
     - The agencyID is [23792069](AgencyID) and the password is [pwd-23792069](Password)
@@ -65,7 +66,6 @@ nlu:
     - [IH551352](AgencyID) and [pwd-112101IH](Password)
     - Okay [IH551352](AgencyID) and [pwd-112101IH](Password)
     - [AIO-23792070](Password)
-    - [AIO-23792070](Password)
 - intent: only_agency_id
   examples: |
     - The agencyID is [23792069](AgencyID)
@@ -74,7 +74,6 @@ nlu:
     - Okay [23792069](AgencyID)
     - [2343637AB](AgencyID) is the agencyID
     - as requested [23792069](AgencyID)
-    - [2343637AB](AgencyID)
     - [2343637AB](AgencyID)
 - intent: only_password
   examples: |
