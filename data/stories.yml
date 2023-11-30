@@ -2,29 +2,98 @@ version: "3.1"
 
 stories:
 
-- story: Welcome user and login the user
+- story: Welcome user
   steps:
   - intent: greet
   - action: utter_greet
-  - intent: request_details
-  - action: login_form
-  - active_loop: login_form
+  - intent: goodbye
+  - action: action_deactivate_loop
   - active_loop: null
-  - action: action_populate_agency_name
-  - action: utter_login_status
+  - action: action_conversation_reset
+  - action: utter_goodbye
+
+# - story: Welcome user and help the existing user
+#   steps:
+#   - intent: greet
+#   - action: utter_greet
+#   - action: utter_how_can_i_help
+
+- story: continue
+  steps:
+    - intent: request_details
+    - action: login_form
+    - active_loop: login_form
 
 - story: Requesting user details
   steps:
   - intent: user_login
   - action: login_form
   - active_loop: login_form
-  - active_loop: null
-  - action: action_populate_agency_name
-  - action: utter_login_status
+  - intent: goodbye
+  - action: action_deactivate_loop
+  - action: action_conversation_reset
+  - action: utter_goodbye
   - intent: request_booking_confirmation_number
   - action: action_booking_confirmation_number
   - intent: request_payment_status
   - action: action_payment_status
+
+- story: Ending conversation in the middle
+  steps:
+  - intent: user_login
+  - action: login_form
+  - active_loop: login_form
+  - intent: goodbye
+  - action: action_deactivate_loop
+  - active_loop: null
+  - action: action_conversation_reset
+  - action: utter_goodbye
+
+# - story: Ending conversation in the middle user login
+#   steps:
+#   - intent: request_details
+#   - action: login_form
+#   - active_loop: login_form
+#   - intent: goodbye
+#   - active_loop: null
+#   - action: action_conversation_reset
+#   - action: utter_goodbye
+
+# - story: Requesting payment status with Empty Slots
+#   steps:
+#   - intent: request_payment_status
+#   - slot_was_set:
+#     - login_status: false
+#   - action: utter_request_login
+#   - action: login_form
+#   - active_loop: login_form
+#   - active_loop: null
+#   - action: action_populate_agency_name
+#   - action: utter_login_status
+#   - action: action_payment_status
+
+# - story: Requesting booking confirmation number Empty Slots
+#   steps:
+#   - intent: request_booking_confirmation_number
+#   - action: utter_request_login
+#   - action: login_form
+#   - active_loop: login_form
+#   - active_loop: null
+#   - action: action_populate_agency_name
+#   - action: utter_login_status
+#   - action: action_booking_confirmation_number
+
+- story: Requesting booking confirmation number with slots filled
+  steps:
+  - intent: request_booking_confirmation_number
+  - action: action_booking_confirmation_number
+
+- story: Requesting payment status with slots filled
+  steps:
+  - intent: request_payment_status
+  - action: action_payment_status
+  
+
 
 # - story: Booking confirmation number
 #   steps:
@@ -67,4 +136,3 @@ stories:
   steps:
   - intent: query_agency_id
   - action: utter_agency_id_value
-  

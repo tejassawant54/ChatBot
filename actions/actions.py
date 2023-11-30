@@ -10,7 +10,7 @@
 from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker, FormValidationAction
-from rasa_sdk.events import SlotSet, EventType
+from rasa_sdk.events import SlotSet, EventType, AllSlotsReset
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
 # import psycopg2
@@ -86,6 +86,14 @@ class ValidateLoginForm(FormValidationAction):
         #     dispatcher.utter_message("Invalid Password. Please try again.")
         #     return {"Password": None}
 
+class ConversartionReset(Action):
+    
+        def name(self) -> Text:
+            return "action_conversation_reset"
+        
+        def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: DomainDict):
+            return [AllSlotsReset()]
+
 class PopulateAgencyNameAction(Action):
     def name(self) -> Text:
         return "action_populate_agency_name"
@@ -113,6 +121,11 @@ class BookingConfirmationNumberAction(Action):
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: DomainDict):
 
         agency_id = tracker.get_slot("AgencyID")
+        login_status = tracker.get_slot("login_status")
+
+        if login_status == False:
+            dispatcher.utter_message("Please login to continue")
+            return []
 
         table = db.Table('user', metadata, autoload=True, autoload_with=engine)
 
@@ -124,6 +137,9 @@ class BookingConfirmationNumberAction(Action):
             print("Valid Confirmation Number")
             dispatcher.utter_message("Your booking confirmation number is " + str(results[0]))
             return []
+        else:
+            dispatcher.utter_message("No Booking Confirmation found. Please try again.")
+            return []
 
 class PaymentStatusAction(Action):
 
@@ -133,6 +149,11 @@ class PaymentStatusAction(Action):
     def run(self, dispatcher: CollectingDispatcher, tracker: Tracker, domain: DomainDict ):
 
         agency_id = tracker.get_slot("AgencyID")
+        login_status = tracker.get_slot("login_status")
+
+        if login_status == False:
+            dispatcher.utter_message("Please login to continue")
+            return []
 
         table = db.Table('user', metadata, autoload=True, autoload_with=engine)
 
@@ -141,8 +162,11 @@ class PaymentStatusAction(Action):
         results = conn.execute(stmt).fetchone()
 
         if results:
-            print("Valid Confirmation Number")
+            # print("Valid Confirmation Number")
             dispatcher.utter_message("Your Payment status is " + str(results[0]))
+            return []
+        else:
+            dispatcher.utter_message("No Payment status found. Please try again.")
             return []
 
 # class ActionLogin(Action):

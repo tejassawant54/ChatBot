@@ -1,10 +1,10 @@
 version: "3.1"
 
 rules:
-  - rule: Say goodbye anytime the user says goodbye
-    steps:
-    - intent: goodbye
-    - action: utter_goodbye
+  # - rule: Say goodbye anytime the user says goodbye
+  #   steps:
+  #   - intent: goodbye
+  #   - action: utter_goodbye
 
 
   # - rule: activate request details form and validate slots
@@ -57,35 +57,88 @@ rules:
   #   - action: login_form
   #   - active_loop: null
   
-  - rule: Asctivate Login Form
-    condition: 
-    - slot_was_set:
-      - login_status: false
+  - rule: Activate Login Form
+    # condition: 
+    # - slot_was_set:
+    #   - login_status: false
     steps:
     - intent: user_login
     - action: login_form
     - active_loop: login_form
-
-  - rule: Deactivate Login Form
-    condition: 
-    - active_loop: login_form
-    steps:
-    - action: login_form
     - active_loop: null
-    - slot_was_set:
-      - requested_slot: null
     - action: action_populate_agency_name
     - action: utter_login_status
 
-  - rule: Booking Confirmation Number
+  # - rule: Request user login credentials already logged in
+  #   # condition:
+  #   # - slot_was_set:
+  #   #   - login_status: true
+  #   steps:
+  #   - intent: user_login
+  #   - action: utter_login_status
+
+  # - rule: Deactivate Login Form
+  #   condition: 
+  #   - active_loop: login_form
+  #   steps:
+  #   - intent: goodbye
+  #   - active_loop: null
+  #   - action: action_conversation_reset
+  #   - action: utter_goodbye
+    # - action: 
+
+  - rule: Reset Conversations
+    steps:
+    - intent: goodbye
+    - action: action_deactivate_loop
+    - active_loop: null
+    - action: action_conversation_reset
+    - action: utter_goodbye
+
+  - rule: Rsset conversation in the middle
+    condition:
+    - active_loop: login_form
+    steps:
+    - intent: goodbye
+    - action: action_deactivate_loop
+    - active_loop: null
+    - action: action_conversation_reset
+    - action: utter_goodbye
+
+  - rule: Booking Confirmation Number\
+    # condition:
+    # - slot_was_set:
+    #   - login_status: true
     steps:
     - intent: request_booking_confirmation_number
     - action: action_booking_confirmation_number
+
+  # - rule: Booking Confirmation Number without login
+  #   steps:
+  #   - intent: request_booking_confirmation_number
+  #   - action: login_form
+  #   - active_loop: login_form
+  #   - active_loop: null
+  #   - action: action_populate_agency_name
+  #   - action: utter_login_status
+  #   - action: action_booking_confirmation_number
 
   - rule: Payment status
     steps:
     - intent: request_payment_status
     - action: action_payment_status
+
+  # - rule: Payment status without login
+  #   steps:
+  #   - intent: request_payment_status
+  #   - action: login_form
+  #   - active_loop: login_form
+  #   - active_loop: null
+  #   - action: action_populate_agency_name
+  #   - action: utter_login_status
+  #   - action: action_payment_status
+
+  
 
 
     
