@@ -137,6 +137,9 @@ class BookingConfirmationNumberAction(Action):
             print("Valid Confirmation Number")
             dispatcher.utter_message("Your booking confirmation number is " + str(results[0]))
             return []
+        else:
+            dispatcher.utter_message("No Booking Confirmation found. Please try again.")
+            return []
 
 class PaymentStatusAction(Action):
 
