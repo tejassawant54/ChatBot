@@ -125,6 +125,7 @@ class BookingConfirmationNumberAction(Action):
 
         if login_status == False:
             dispatcher.utter_message("Please type 'login' to enter credentials")
+            return []
 
         table = db.Table('user', metadata, autoload=True, autoload_with=engine)
 
@@ -152,6 +153,7 @@ class PaymentStatusAction(Action):
 
         if login_status == False:
             dispatcher.utter_message("Please type 'login' to enter credentials")
+            return []
 
         table = db.Table('user', metadata, autoload=True, autoload_with=engine)
 

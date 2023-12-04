@@ -58,6 +58,9 @@ function App() {
           </Block>
         </Block>;
       setMessageList(prevMessages => [...prevMessages, botMessage]);
+      if (value.text === "Please login to continue") {
+        setLoginModal(true);
+      }
     }
     messagesRef.current.scrollIntoView({ behavior: 'smooth' });
   }
@@ -119,7 +122,7 @@ function App() {
       <BaseProvider theme={DarkTheme}>
         <>
           <div style={{ display: "flex", flexDirection: "column", backgroundColor: "#1B1B1B", height: "100vh", }}>
-            <Block style={{ display: "flex", alignItems: "center", padding: "10px", backgroundColor: "#000000", justifyContent: "space-between" }}>
+            <Block style={{ display: "flex", alignItems: "center", padding: "10px", backgroundColor: "#121212", justifyContent: "space-between" }}>
               <DisplayXSmall>ChatBot Application</DisplayXSmall>
               <Block style={{ backgroundColor: "#E2E2E2", padding: "10px", display: "flex", flexDirection: "row", borderRadius: "40px", alignItems: "center" }}>
                 <ParagraphMedium style={{ marginRight: "10px", marginTop: "0px", marginBottom: "0px", color: "#1B1B1B" }}>Status: </ParagraphMedium>
@@ -143,11 +146,11 @@ function App() {
               <div style={{ height: "20px" }} ref={messagesRef} />
             </Block>
             <form onSubmit={isConnected ? sendMessage : null}>
-              <Block style={{ display: "flex", alignItems: "center", padding: "10px", backgroundColor: "#000000" }}>
+              <Block style={{ display: "flex", alignItems: "center", padding: "10px", backgroundColor: "#121212" }}>
                 <Input disabled={!isConnected} id='message' value={messages} onChange={(event) => setMessages(event.target.value)} placeholder='Type the message here' size='default' clearable />
                 <Button disabled={!isConnected} size='compact' style={{ marginRight: "20px", marginLeft: "20px" }} type='submit'>
                   Send
-                  <ChevronRight size={30} color='#000000' />
+                  <ChevronRight size={30} color='#121212' />
                 </Button>
               </Block>
             </form>
