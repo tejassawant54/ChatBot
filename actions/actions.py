@@ -124,7 +124,7 @@ class BookingConfirmationNumberAction(Action):
         login_status = tracker.get_slot("login_status")
 
         if login_status == False:
-            dispatcher.utter_message("Please login to continue")
+            dispatcher.utter_message("Please type 'login' to enter credentials")
             return []
 
         table = db.Table('user', metadata, autoload=True, autoload_with=engine)
@@ -152,7 +152,7 @@ class PaymentStatusAction(Action):
         login_status = tracker.get_slot("login_status")
 
         if login_status == False:
-            dispatcher.utter_message("Please login to continue")
+            dispatcher.utter_message("Please type 'login' to enter credentials")
             return []
 
         table = db.Table('user', metadata, autoload=True, autoload_with=engine)
